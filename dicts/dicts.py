@@ -21,7 +21,7 @@ class CmpDict:
         # todo: represent self.cmp
         return f"CmpDict{{{', '.join(f'{self_aware_repr(self, k)}: {self_aware_repr(self, self[k])}' for k in self)}}}"
 
-    # todo
+    # todo: how to deal with cmp?
     # def __eq__(self, rhs):
 
     def __iter__(self):
@@ -86,6 +86,9 @@ class EqDict:
     def _d(self, k):
         return self.d if hashable(k) else self.cd
 
+    def __len__(self):
+        return len(self.d) + len(self.cd)
+
     def __contains__(self, k):
         return k in self._d(k)
 
@@ -94,6 +97,9 @@ class EqDict:
 
     def __setitem__(self, k, v):
         self._d(k)[k] = v
+
+    def __delitem__(self, k):
+        del self._d(k)[k]
 
 
 class IdDict(CmpDict):
