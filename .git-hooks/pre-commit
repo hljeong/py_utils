@@ -1,4 +1,5 @@
 #!/usr/bin/env -S bash -xe
 
+make test
 make list-deps
 git add requirements.txt

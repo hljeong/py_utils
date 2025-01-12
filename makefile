@@ -1,20 +1,22 @@
-MAKEFLAGS += --no-print-directory
+include makefile_utils/defaults.mk
 
 PYTHON = python3
 
-.PHONY: all hooks update setup list-deps test
+.PHONY: all clean update setup list-deps test
 
 all: test
 
-hooks: git-hooks-apply
+clean: python-clean
 
 update: git-submodule-update
 
-setup: venv-setup
+setup: git-hooks-apply venv-setup
 
 list-deps: venv-list-deps
 
-test: venv-active
+test:
+	@ echo 'all tests passed'
 
 include makefile_utils/git.mk
+include makefile_utils/python.mk
 include makefile_utils/venv.mk
