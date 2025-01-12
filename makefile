@@ -10,7 +10,7 @@ clean: python-clean
 
 update: git-submodule-update
 
-setup: git-hooks-apply venv-setup
+setup: git-hook-apply venv-setup
 
 list-deps: venv-list-deps
 
