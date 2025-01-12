@@ -1,0 +1,1 @@
+make venv-install-deps && source ./.venv/bin/activate
