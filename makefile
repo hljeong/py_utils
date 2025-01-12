@@ -2,7 +2,7 @@ include makefile_utils/defaults.mk
 
 PYTHON = python3
 
-.PHONY: all clean update setup list-deps test
+.PHONY: all clean update setup test
 
 all: test
 
@@ -11,8 +11,6 @@ clean: python-clean
 update: git-submodule-update
 
 setup: git-hook-apply venv-setup
-
-list-deps: venv-list-deps
 
 test:
 	@ echo 'all tests passed'

@@ -1,5 +1,5 @@
 #!/usr/bin/env -S bash -xe
 
 make test
-make list-deps
+make venv-list-deps
 git add requirements.txt
