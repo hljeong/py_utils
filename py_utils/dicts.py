@@ -1,3 +1,7 @@
+# todo: make dicts parametrized with default factory?
+# todo: reduce boilerplate
+
+
 def self_aware_repr(self, obj):
     return "self" if obj is self else repr(obj)
 
@@ -10,6 +14,35 @@ def hashable(obj):
 
     except:
         return False
+
+
+class WithDefault:
+    def __init__(self, d, default_factory):
+        self.d = d
+        self.default_factory = default_factory
+
+    def __repr__(self):
+        return f"{self.d!r} with default"
+
+    def __iter__(self):
+        return iter(self.d)
+
+    def __len__(self):
+        return len(self.d)
+
+    def __contains__(self, k):
+        return k in self.d
+
+    def __getitem__(self, k):
+        if k not in self.d:
+            self.d[k] = self.default_factory()
+        return self.d[k]
+
+    def __setitem__(self, k, v):
+        self.d[k] = v
+
+    def __delitem__(self, k):
+        del self.d[k]
 
 
 class CmpDict:

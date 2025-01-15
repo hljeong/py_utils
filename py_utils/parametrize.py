@@ -8,8 +8,8 @@ class ParametrizedMeta(type):
             parameter = tuple(parameter)
         return cls.of(parameter)
 
-    @staticmethod
-    def of(parameter):
+    @classmethod
+    def of(cls, parameter):
         raise NotImplementedError
 
 
