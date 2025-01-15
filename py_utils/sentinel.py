@@ -2,10 +2,18 @@
 class Sentinel:
     _sentinels = dict()
 
+    def __init__(self, name):
+        self.name = name
+
     def __new__(cls, name):
         sentinel = super().__new__(cls)
-        sentinel._repr = name  # type: ignore
         return Sentinel._sentinels.setdefault(name, sentinel)
 
     def __repr__(self):
-        return self._repr  # type: ignore
+        return self.name
+
+    def __copy__(self):
+        return Sentinel._sentinels[self.name]
+
+    def __deepcopy__(self, _):
+        return self.__copy__()
