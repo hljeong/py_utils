@@ -1,8 +1,11 @@
 from functools import partial, update_wrapper
+from inspect import isgenerator
 
 
 class ParametrizedMeta(type):
     def __getitem__(cls, parameter):
+        if isgenerator(parameter):
+            parameter = tuple(parameter)
         return cls.of(parameter)
 
     @staticmethod
