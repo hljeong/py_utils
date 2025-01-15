@@ -46,12 +46,11 @@ class ParametrizedFunc:
         )
 
 
-def parametrize(func):
-    return ParametrizedFunc(func)
+def parametrize(func_or_parameter_name):
+    if callable(func_or_parameter_name):
+        return ParametrizedFunc(func_or_parameter_name)
 
-
-def named_parametrize(parameter_name):
-    def decorator(func):
-        return ParametrizedFunc(func, parameter_name=parameter_name)
-
-    return decorator
+    else:
+        return lambda func: ParametrizedFunc(
+            func, parameter_name=func_or_parameter_name
+        )
