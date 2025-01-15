@@ -46,11 +46,7 @@ class ParametrizedFunc:
         )
 
 
-def parametrize(func_or_parameter_name):
-    if callable(func_or_parameter_name):
-        return ParametrizedFunc(func_or_parameter_name)
-
-    else:
-        return lambda func: ParametrizedFunc(
-            func, parameter_name=func_or_parameter_name
-        )
+# must use @parametrize() for parametrizing first arg
+# hard to get type checking to work otherwise
+def parametrize(parameter_name=None):
+    return lambda func: ParametrizedFunc(func, parameter_name=parameter_name)
