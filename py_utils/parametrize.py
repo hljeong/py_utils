@@ -1,4 +1,4 @@
-import functools
+from functools import partial, update_wrapper
 
 
 class ParametrizedMeta(type):
@@ -18,18 +18,31 @@ class ParametrizedFunc:
     def __init__(self, func, parameter_name=None):
         self.func = func
         self.parameter_name = parameter_name
+        update_wrapper(self, self.func)
+
+    def __repr__(self):
+        return f"parametrized {self.func!r}"
 
     def __call__(self, *a, **kw):
         return self.func(*a, **kw)
 
     def __getitem__(self, parameter):
         if self.parameter_name is None:
-            return functools.partial(self.func, parameter)
+            wrapped = update_wrapper(partial(self.func, parameter), self.func)
         else:
-            return functools.partial(self.func, **{self.parameter_name: parameter})
+            wrapped = update_wrapper(
+                partial(self.func, **{self.parameter_name: parameter}), self.func
+            )
+        wrapped.__name__ += f"[{parameter}]"
+        return wrapped
+
+    def __get__(self, instance, _):
+        return ParametrizedFunc(
+            update_wrapper(partial(self.func, instance), self.func),
+            parameter_name=self.parameter_name,
+        )
 
 
-# todo: parametrize methods
 def parametrize(func):
     return ParametrizedFunc(func)
 
