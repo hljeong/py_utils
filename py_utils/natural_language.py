@@ -17,3 +17,19 @@ def plural(s, count=2):
 
 def this_many(n, s):
     return f"{n} {plural(s, count=n)}"
+
+
+def oxford(ts):
+    ts = list(ts)
+    match ts:
+        case []:
+            return ""
+
+        case [t]:
+            return t
+
+        case [t1, t2]:
+            return f"{t1} and {t2}"
+
+        case [*ts, t]:
+            return f"{', '.join(ts)}, and {t}"

@@ -10,7 +10,7 @@ clean: python-clean
 
 update: git-submodule-update
 
-setup: git-hook-apply venv-setup
+setup: git-hook-install venv-setup
 
 test:
 	@ echo 'all tests passed'
